@@ -43,25 +43,25 @@ def site_contact():
 #     return render_template("login.html")
 #
 #
-# @app.route('/signup', methods=['GET', 'POST'])
-# def site_signup():
-#     print(request.form)
-#     fname = request.form.get('fname')
-#     lname = request.form.get('lname')
-#     email = request.form.get('email')
-#     password = request.form.get('password')
-#     password2 = request.form.get('password2')
-#
-#     con = create_connection(DATABASE)
-#
-#     query = "INSERT INTO customer(id, fname, lname, email, password) VALUES(NULL,?,?,?,?)"
-#
-#     cur = con.cursor()
-#     cur.execute(query, (fname, lname, email, password))
-#     con.commit()
-#     con.close()
-#
-#     return render_template("signup.html")
+@app.route('/signup', methods=['GET', 'POST'])
+def site_signup():
+    print(request.form)
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    password2 = request.form.get('password2')
+
+    con = create_connection(DATABASE)
+
+    query = "INSERT INTO Users(id, fname, lname, email, password) VALUES(NULL,?,?,?,?)"
+
+    cur = con.cursor()
+    cur.execute(query, (fname, lname, email, password))
+    con.commit()
+    con.close()
+
+    return render_template("signup.html")
 
 
 if __name__ == '__main__':
