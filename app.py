@@ -4,7 +4,7 @@ from sqlite3 import Error
 
 
 app = Flask(__name__)
-DATABASE = "main_database.db"
+DATABASE = "database_main.sql"
 
 
 def create_connection(db_file):
@@ -48,16 +48,17 @@ def site_signup():
     print(request.form)
     fname = request.form.get('fname')
     lname = request.form.get('lname')
+    teacher = request.form.get('teacher')
     email = request.form.get('email')
     password = request.form.get('password')
     password2 = request.form.get('password2')
 
     con = create_connection(DATABASE)
 
-    query = "INSERT INTO Users(id, fname, lname, email, password) VALUES(NULL,?,?,?,?)"
+    query = "INSERT INTO users(id, fname, lname, teacher, email, password) VALUES(NULL,?,?,?,?, ?)"
 
     cur = con.cursor()
-    cur.execute(query, (fname, lname, email, password))
+    cur.execute(query, (fname, lname, teacher, email, password))
     con.commit()
     con.close()
 
