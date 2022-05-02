@@ -38,14 +38,14 @@ def site_signup():
     lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
-    password2 = request.form.get('password2')
+    type = request.form.get('type')
 
     con = create_connection(DATABASE)
 
-    query = "INSERT INTO people(id, fname, lname, email, password) VALUES(NULL,?,?,?, ?)"
+    query = "INSERT INTO people(id, fname, lname, email, password,type) VALUES(NULL,?,?,?,?,?)"
 
     cur = con.cursor()
-    cur.execute(query, (fname, lname, email, password))
+    cur.execute(query, (fname, lname, email, password, type))
     con.commit()
     con.close()
 
