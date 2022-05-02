@@ -4,7 +4,7 @@ from sqlite3 import Error
 
 
 app = Flask(__name__)
-DATABASE = "database_main.sql"
+DATABASE = "app_assessment_daniel.sqlite"
 
 
 def create_connection(db_file):
@@ -21,44 +21,31 @@ def site_home():
     return render_template("home.html")
 
 
-# @app.route('/menu')
-# def site_menu():
-#     con = create_connection(DATABASE)
-#     query = "SELECT name, description, volume, image, price FROM product"
-#     cur = con.cursor()
-#     cur.execute(query)
-#
-#     product_list = cur.fetchall()
-#     con.close()
-#     return render_template("menu.html", products=product_list)
-#
-#
 @app.route('/contact')
 def site_contact():
     return render_template("contact.html")
 
 
-# @app.route('/login')
-# def site_login():
-#     return render_template("login.html")
-#
-#
+@app.route('/login')
+def site_login():
+    return render_template("login.html")
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def site_signup():
     print(request.form)
     fname = request.form.get('fname')
     lname = request.form.get('lname')
-    teacher = request.form.get('teacher')
     email = request.form.get('email')
     password = request.form.get('password')
     password2 = request.form.get('password2')
 
     con = create_connection(DATABASE)
 
-    query = "INSERT INTO users(id, fname, lname, teacher, email, password) VALUES(NULL,?,?,?,?, ?)"
+    query = "INSERT INTO people(id, fname, lname, email, password) VALUES(NULL,?,?,?, ?)"
 
     cur = con.cursor()
-    cur.execute(query, (fname, lname, teacher, email, password))
+    cur.execute(query, (fname, lname, email, password))
     con.commit()
     con.close()
 

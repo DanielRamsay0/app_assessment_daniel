@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block pageheading %}Login{% endblock %}
+
+{% block main %}
+<form class="myform">
+    <div class="form-group">
+        <div class="form-label">Email:</div>
+        <div class="form-element"><input type="email" required></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Password:</div>
+        <div class="form-element"><input type="password" required></div>
+    </div>
+    <div class="button-group">
+        <input type="submit" value="Submit"> or <a href="signup">sign up</a>
+    </div>
+</form>
+
+
+{% endblock %}
