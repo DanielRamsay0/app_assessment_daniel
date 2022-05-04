@@ -1,3 +1,6 @@
+from datetime import date
+import time
+
 from flask import Flask, render_template, request, session, redirect
 import sqlite3
 from sqlite3 import Error
@@ -30,8 +33,24 @@ def site_dictionary():
     return render_template("dictionary.html")
 
 
-@app.route('/contribute')
+@app.route('/contribute', methods=['GET', 'POST'])
 def site_contribute():
+    print(request.form)
+    category = request.form.get('category')
+    english_name = request.form.get('english_name')
+    maori_name = request.form.get('maori_name')
+    created_at = date.today()
+    created_by =
+
+    con = create_connection(DATABASE)
+
+    query = "INSERT INTO maori_words(id, category, english_name, maori_name, created_at) VALUES(NULL,?,?,?,?)"
+
+    cur = con.cursor()
+    cur.execute(query, (category, english_name, maori_name, created_at))
+    con.commit()
+    con.close()
+
     return render_template("contribute.html")
 
 
@@ -51,7 +70,7 @@ def site_signup():
 
     con = create_connection(DATABASE)
 
-    query = "INSERT INTO people(id, fname, lname, email, password,type) VALUES(NULL,?,?,?,?,?)"
+    query = "INSERT INTO people(id, fname, lname, email, password, type) VALUES(NULL,?,?,?,?,?)"
 
     cur = con.cursor()
     cur.execute(query, (fname, lname, email, password, type))

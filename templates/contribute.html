@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
-{% block pageheading %}Contribute{% endblock %}
+{% block pageheading %}
+Contribute
+{% endblock %}
 
 {% block main %}
+<form class="myform" method="post">
+    <div class="form-group">
+        <div class="form-label">Category:</div>
+        <div class="form-element"><input id="category" name="category" type="text" required></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Word/Phrase (English):</div>
+        <div class="form-element"><input id="english_name" name="english_name" type="text" required></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Word/Phrase (Maori):</div>
+        <div class="form-element"><input id="maori_name" name="maori_name" type="text" required></div>
+    </div>
+
+    <div class="button-group">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
+</form>
+
 
 {% endblock %}
