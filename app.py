@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, session, redirect
 import sqlite3
 from sqlite3 import Error
 
-
 app = Flask(__name__)
 DATABASE = "app_assessment_daniel.sqlite"
 
@@ -21,9 +20,19 @@ def site_home():
     return render_template("home.html")
 
 
-@app.route('/contact')
-def site_contact():
-    return render_template("contact.html")
+@app.route('/about')
+def site_about():
+    return render_template("about.html")
+
+
+@app.route('/dictionary')
+def site_dictionary():
+    return render_template("dictionary.html")
+
+
+@app.route('/contribute')
+def site_contribute():
+    return render_template("contribute.html")
 
 
 @app.route('/login')
