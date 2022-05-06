@@ -39,15 +39,15 @@ def site_contribute():
     category = request.form.get('category')
     english_name = request.form.get('english_name')
     maori_name = request.form.get('maori_name')
+    minimum_year_group = request.form.get('minimum_year_group')
     created_at = date.today()
-    created_by =
 
     con = create_connection(DATABASE)
 
-    query = "INSERT INTO maori_words(id, category, english_name, maori_name, created_at) VALUES(NULL,?,?,?,?)"
+    query = "INSERT INTO maori_words(id, category, english_name, maori_name, created_at, minimum_year_group) VALUES(NULL,?,?,?,?,?)"
 
     cur = con.cursor()
-    cur.execute(query, (category, english_name, maori_name, created_at))
+    cur.execute(query, (category, english_name, maori_name, created_at, minimum_year_group))
     con.commit()
     con.close()
 
