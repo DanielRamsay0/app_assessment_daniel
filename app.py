@@ -1,11 +1,14 @@
+# Importing packages needed for the password hashing, website and database including its timestamps
 from datetime import date
-import time
-
 from flask import Flask, render_template, request, session, redirect
+from flask_bcrypt import Bcrypt
 import sqlite3
 from sqlite3 import Error
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
+app.secret_key = "3P*7iW>d},LHDw<3~(bg"
+
 DATABASE = "app_assessment_daniel.sqlite"
 
 
@@ -51,6 +54,10 @@ def site_contribute():
 
 @app.route('/login', methods=["GET", "POST"])
 def site_login():
+    if is_logged_in():
+        print("is logged in b")
+        return redirect('/')
+
     if request.method == "POST":
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
@@ -68,7 +75,7 @@ def site_login():
         except IndexError:
             return redirect("/login?error=Email+Invalid+Or+Password+Incorrect")
 
-        if db_password != password:
+        if not bcrypt.check_password_hash(db_password, password):
             return redirect("/login?error=Email+Invalid+Or+Password+Incorrect")
 
         session['email'] = email
@@ -76,11 +83,16 @@ def site_login():
         session['firstname'] = firstname
         print(session)
         return redirect('/')
+
     return render_template('login.html', logged_in=is_logged_in())
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def site_signup():
+    if is_logged_in():
+        print("is logged in a")
+        return redirect('/')
+
     if request.method == 'POST':
         print(request.form)
         fname = request.form.get('fname').strip().title()
@@ -96,8 +108,10 @@ def site_signup():
         if len(password) < 6:
             return redirect('/signup?error=Password+Must+Be+At+Least+6+Characters')
 
-        if len(fname) < 6 or len(lname) < 6:
+        if len(fname) < 2 or len(lname) < 2:
             return redirect('/signup?error=Names+Must+Be+At+Least+2+Characters')
+
+        hashed_password = bcrypt.generate_password_hash(password)
 
         con = create_connection(DATABASE)
 
@@ -105,7 +119,7 @@ def site_signup():
 
         cur = con.cursor()
         try:
-            cur.execute(query, (fname, lname, email, password, type))
+            cur.execute(query, (fname, lname, email, hashed_password, type))
         except sqlite3.IntegrityError:
             return redirect('/signup?error=Email+s+Already+Being+Used')
 
@@ -116,7 +130,14 @@ def site_signup():
     return render_template("signup.html")
 
 
+def is_logged_in():
+    if session.get("email") is None:
+        print("not logged in")
+        return False
+    else:
+        print("logged in")
+        return True
+
+
 if __name__ == '__main__':
     app.run()
-
-# hihi
