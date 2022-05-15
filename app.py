@@ -21,6 +21,22 @@ def create_connection(db_file):
     return None
 
 
+def is_logged_in():
+    if session.get("email") is None:
+        print("not logged in")
+        return False
+    else:
+        print("logged in")
+        return True
+
+
+@app.route('/logout')
+def logout():
+    [session.pop(key) for key in list(session.keys())]
+    print(session)
+    return redirect('/?message=See+you+next+time!')
+
+
 @app.route('/')
 def site_home():
     return render_template("home.html")
@@ -62,7 +78,7 @@ def site_login():
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
 
-        query = """SELECT id, fname, password FROM people WHERE email = ?"""
+        query = """SELECT id, fname, lname, password FROM people WHERE email = ?"""
         con = create_connection(DATABASE)
         cur = con.cursor()
         cur.execute(query, (email,))
@@ -71,7 +87,8 @@ def site_login():
         try:
             userid = user_data[0][0]
             firstname = user_data[0][1]
-            db_password = user_data[0][2]
+            lastname = user_data[0][2]
+            db_password = user_data[0][3]
         except IndexError:
             return redirect("/login?error=Email+Invalid+Or+Password+Incorrect")
 
@@ -81,6 +98,7 @@ def site_login():
         session['email'] = email
         session['userid'] = userid
         session['firstname'] = firstname
+        session['lastname'] = lastname
         print(session)
         return redirect('/')
 
@@ -128,15 +146,6 @@ def site_signup():
         return redirect('/login')
 
     return render_template("signup.html")
-
-
-def is_logged_in():
-    if session.get("email") is None:
-        print("not logged in")
-        return False
-    else:
-        print("logged in")
-        return True
 
 
 if __name__ == '__main__':

@@ -18,8 +18,11 @@
 <a href="/">Home</a>
 <a href="/dictionary">Dictionary</a>
 <a href="/contribute">Contribute</a>
-<a href="/login">Login</a>
-<a href="/signup">Signup</a>
+{% if logged_in %}
+    <a href="/logout">Log Out</a>
+{% else %}
+    <a href="/login">Login</a>
+{% endif %}
 </div>
 </div>
 </nav>
@@ -28,6 +31,9 @@
 <h1>Maori Dictionary</h1>
 <h2>{% block pageheading %}{% endblock %}</h2>
 </header>
+{% if logged_in %}
+    <strong>Hello, {{ session.firstname }}</strong>
+{% endif %}
 
 <main>
 {% block main %}{% endblock %}
