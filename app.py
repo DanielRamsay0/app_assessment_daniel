@@ -39,7 +39,7 @@ def logout():
 
 @app.route('/')
 def site_home():
-    return render_template("home.html")
+    return render_template("home.html", logged_in=is_logged_in())
 
 
 @app.route('/dictionary')
@@ -145,7 +145,7 @@ def site_signup():
         con.close()
         return redirect('/login')
 
-    return render_template("signup.html")
+    return render_template("signup.html", logged_in=is_logged_in())
 
 
 if __name__ == '__main__':
