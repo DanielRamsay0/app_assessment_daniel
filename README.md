@@ -1,1 +1,1 @@
-# Te Reo Dictionary (app_assessment_daniel)
+# This is an editable dictionary for Maori Words with their English Translations.
