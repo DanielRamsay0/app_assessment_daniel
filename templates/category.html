@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block pageheading %}
+{{category_name}}
+{% endblock %}
+
+{% block main %}
+<table>
+    <tr>
+        <th>Maori</th>
+        <th>English</th>
+        <th>Definition</th>
+        <th>Level</th>
+        <th>Created By</th>
+        <th>Created At</th>
+        <th>Image</th>
+        </tr>
+        <tbody>
+            {% for maori_name in maori_names %}
+                <tr>
+                    <td>{{ maori_name[0] }}</td>
+                    <td>{{ maori_name[1] }}</td>
+                    <td>{{ maori_name[2] }}</td>
+                    <td>{{ maori_name[3] }}</td>
+                    <td>{{ maori_name[4] }}</td>
+                    <td>{{ maori_name[5] }}</td>
+                    {% if maori_name[6] %}
+                        <td><img src='/static/images/{{maori_name[6]}}'></td>
+                    {% else %}
+                        <td><img src='/static/images/no_given_image.jpeg'></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

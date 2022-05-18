@@ -23,7 +23,7 @@ def create_connection(db_file):
 
 @app.route('/')
 def site_home():
-    return render_template("home.html", logged_in=is_logged_in())
+    return render_template("home.html", logged_in=is_logged_in(), categories=get_categories())
 
 
 def is_logged_in():
@@ -76,7 +76,7 @@ def site_login():
         print(session)
         return redirect('/')
 
-    return render_template('login.html', logged_in=is_logged_in())
+    return render_template('login.html', logged_in=is_logged_in(), categories=get_categories())
 
 
 # Signup page
@@ -125,12 +125,12 @@ def site_signup():
         con.close()
         return redirect('/login')
 
-    return render_template("signup.html", logged_in=is_logged_in())
+    return render_template("signup.html", logged_in=is_logged_in(), categories=get_categories())
 
 
 # Making a list of categories
 def get_categories():
-    query = "SELECT category FROM categories"
+    query = "SELECT distinct category FROM maori_words"
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query)
@@ -138,6 +138,19 @@ def get_categories():
     con.close()
     print(category_list)
     return category_list
+
+
+@app.route('/category/<category_name>')
+def site_category(category_name):
+    query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename \
+            FROM maori_words WHERE category = ?"
+    con = create_connection(DATABASE)
+    cur = con.cursor()
+    cur.execute(query, (category_name,))
+    maori_names = cur.fetchall()
+    con.close()
+    print(maori_names)
+    return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names)
 
 
 @app.route('/contribute', methods=['GET', 'POST'])
@@ -161,7 +174,7 @@ def site_contribute():
     con.commit()
     con.close()
 
-    return render_template("contribute.html")
+    return render_template("contribute.html", categories=get_categories())
 
 
 if __name__ == '__main__':
