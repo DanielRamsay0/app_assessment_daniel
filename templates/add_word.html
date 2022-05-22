@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block pageheading %}Contribute{% endblock %}
+{% block pageheading %}Add A Word{% endblock %}
 
 {% block main %}
 <form class="myform" method="post">
@@ -27,6 +27,11 @@
     <div class="form-group">
         <div class="form-label">Level:</div>
         <div class="form-element"><input id="level" name="level" type="text" required></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Image:</div>
+        <div class="form-element"><input id="image" name="image" type="file"></div>
     </div>
 
     <div class="button-group">

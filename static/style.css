@@ -1,0 +1,304 @@
+* {
+    font-family: Comfortaa, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 75px auto;
+    grid-template-areas: 'nav header' 'main main' 'footer footer';
+    }
+
+header {
+    grid-area: header;
+    background-color: #f00;
+    padding: 1rem;
+}
+
+nav {
+    grid-area: nav;
+}
+
+main {
+    grid-area: main;
+    padding: 1rem;
+    background-color: #edd;
+}
+
+h1, h2, h3, h4 {
+    padding: 1rem 0;
+    font-family: 'Suez One', serif;
+    color: #000;
+    text-shadow: 2px 2px 4px #fff;
+}
+
+p {
+    padding: 0.5rem 0;
+}
+
+a {
+    color: #222;
+}
+
+img {
+    width: 100%;
+}
+.dataForm {
+    margin: 1rem 0;
+    border: 1px solid #999;
+    padding: 1rem;
+    background-color: #fcc;
+    border-radius: 10px;
+}
+
+.dataForm input, textarea {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.3rem;
+    margin-bottom: 10px;
+}
+
+.dataForm p input {
+    display: inline;
+    width: 1rem;
+    margin-left: 0.5rem;
+}
+
+.error {
+    color: #f00;
+}
+
+.login {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed #fff;
+}
+
+table {
+    width: 100%;
+    border: 2px solid #666;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #888;
+    padding: 0.2rem;
+    text-align: left;
+}
+th {
+    background-color: #000;
+    color: #fff;
+}
+
+img .thumb {
+    max-width: 90px;
+}
+footer {
+    grid-area: footer;
+    padding: 1rem;
+    background-color: #f00;
+}
+
+footer p {
+    color: #000;
+    text-shadow: 2px 2px 4px #fff;
+    font-size: 1.5rem;
+}
+
+footer img {
+    float: right;
+}
+
+@media only screen and (max-width: 768px) {
+    nav
+    {
+      display: block;
+      position: relative;
+      top: 20px;
+      left: 20px;
+
+      z-index: 1;
+
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    nav a
+    {
+      text-decoration: none;
+      color: #232323;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover
+    {
+      color: tomato;
+    }
+
+
+    nav input
+    {
+      display: block;
+      width: 40px;
+      height: 32px;
+      position: absolute;
+      top: -7px;
+      left: -5px;
+
+      cursor: pointer;
+
+      opacity: 0; /* hide this */
+      z-index: 2; /* and place it over the hamburger */
+
+      -webkit-touch-callout: none;
+    }
+
+    /*
+     * Just a quick hamburger
+     */
+    nav span
+    {
+      display: block;
+      width: 33px;
+      height: 4px;
+      margin-bottom: 5px;
+      position: relative;
+
+      background: #000;
+      border-radius: 3px;
+
+      z-index: 1;
+
+      transform-origin: 4px 0px;
+
+      transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                  background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                  opacity 0.55s ease;
+    }
+
+    nav span:first-child
+    {
+      transform-origin: 0% 0%;
+    }
+
+    nav span:nth-last-child(2)
+    {
+      transform-origin: 0% 100%;
+    }
+
+    /*
+     * Transform all the slices of hamburger
+     * into a crossmark.
+     */
+    nav input:checked ~ span
+    {
+      opacity: 1;
+      transform: rotate(45deg) translate(-2px, -1px);
+      background: #000;
+    }
+
+    /*
+     * But let's hide the middle one.
+     */
+    nav input:checked ~ span:nth-last-child(3)
+    {
+      opacity: 0;
+      transform: rotate(0deg) scale(0.2, 0.2);
+    }
+
+    /*
+     * Ohyeah and the last one should go the other direction
+     */
+    nav input:checked ~ span:nth-last-child(2)
+    {
+      transform: rotate(-45deg) translate(0, -1px);
+    }
+
+    /*
+     * Make this absolute positioned
+     * at the top left of the screen
+     */
+    nav ul
+    {
+      position: absolute;
+      width: 300px;
+      margin: -100px 0 0 -50px;
+      padding: 50px;
+      padding-top: 125px;
+
+      background: #ed9999;
+      list-style-type: none;
+      -webkit-font-smoothing: antialiased;
+      /* to stop flickering of text in safari */
+
+      transform-origin: 0% 0%;
+      transform: translate(-100%, 0);
+
+      transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    }
+
+    nav ul li
+    {
+      padding: 5px 0;
+    }
+
+    /*
+     * And let's slide it in from the left
+     */
+    nav input:checked ~ ul
+    {
+      transform: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #container {
+        grid-template-columns: 180px auto;
+        grid-template-areas: 'header header' 'nav main' 'footer footer';
+    }
+
+    nav {
+        background: linear-gradient(180deg, rgba(255,0,0,1) 0%, rgba(0, 0, 0, 1) 50%,  rgba(255,0,0,1) 100%);
+        padding: 0.5rem;
+    }
+
+    nav ul {
+        list-style: none;
+    }
+    nav li {
+        padding: 0.2rem 0;
+    }
+    nav a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    nav a:hover {
+        color: #000;
+        background-color: #fff;
+    }
+    nav input, nav span {
+        visibility: hidden;
+    }
+
+    main {
+        background-image: url('/poutama.jpg');
+    }
+    .formRow {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin: 0.5rem 0;
+    }
+    .dataForm p input {
+        display: inline;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    #container {
+        width: 1000px;
+        margin: auto;
+    }
+}

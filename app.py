@@ -153,28 +153,46 @@ def site_category(category_name):
     return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names)
 
 
-@app.route('/contribute', methods=['GET', 'POST'])
-def site_contribute():
-    print(request.form)
-    category = request.form.get('category')
-    english_name = request.form.get('english_name')
-    maori_name = request.form.get('maori_name')
-    level = request.form.get('level')
-    definition = request.form.get('definition')
-    created_at = date.today()
-
+@app.route('/category/<category_name>/<maori_word>')
+def site_word(category_name, maori_word):
+    query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename \
+            FROM maori_words WHERE maori_name = ?"
     con = create_connection(DATABASE)
-
-    query = "INSERT INTO maori_words(id, category, english_name, maori_name," \
-            " created_at, definition, level)" \
-            " VALUES(NULL,?,?,?,?,?,?)"
-
     cur = con.cursor()
-    cur.execute(query, (category, english_name, maori_name, created_at, definition, level))
-    con.commit()
+    cur.execute(query, (maori_word,))
+    maori_names = cur.fetchall()
     con.close()
+    print(maori_names)
+    return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names)
 
-    return render_template("contribute.html", categories=get_categories())
+
+@app.route('/add_word', methods=['GET', 'POST'])
+def site_add_word():
+    if not is_logged_in():
+        print("must be logged in and be a teacher to add words")
+        return redirect('/login')
+
+    if request.method == 'POST':
+        print(request.form)
+        category = request.form.get('category')
+        english_name = request.form.get('english_name')
+        maori_name = request.form.get('maori_name')
+        level = request.form.get('level')
+        definition = request.form.get('definition')
+        created_at = date.today()
+
+        con = create_connection(DATABASE)
+
+        query = "INSERT INTO maori_words(id, category, english_name, maori_name," \
+                " created_at, definition, level)" \
+                " VALUES(NULL,?,?,?,?,?,?)"
+
+        cur = con.cursor()
+        cur.execute(query, (category, english_name, maori_name, created_at, definition, level))
+        con.commit()
+        con.close()
+
+    return render_template("add_word.html", categories=get_categories())
 
 
 if __name__ == '__main__':

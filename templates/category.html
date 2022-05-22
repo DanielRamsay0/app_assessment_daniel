@@ -18,7 +18,7 @@
         <tbody>
             {% for maori_name in maori_names %}
                 <tr>
-                    <td>{{ maori_name[0] }}</td>
+                    <td><a href='/category/{{ category_name }}/{{ maori_name[0] }}'>{{ maori_name[0] }}</a></td>
                     <td>{{ maori_name[1] }}</td>
                     <td>{{ maori_name[2] }}</td>
                     <td>{{ maori_name[3] }}</td>
@@ -27,7 +27,7 @@
                     {% if maori_name[6] %}
                         <td><img src='/static/images/{{maori_name[6]}}'></td>
                     {% else %}
-                        <td><img src='/static/images/no_given_image.jpeg'></td>
+                        <td><img src='/static/images/noimage.png'></td>
                     {% endif %}
                 </tr>
             {% endfor %}
