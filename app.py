@@ -35,6 +35,16 @@ def is_logged_in():
         return True
 
 
+def is_a_teacher():
+    print('running')
+    if session.get("type") == 'teacher':
+        print("is teacher")
+        return True
+    else:
+        print("is not teacher")
+        return False
+
+
 @app.route('/logout')
 def logout():
     [session.pop(key) for key in list(session.keys())]
@@ -52,7 +62,7 @@ def site_login():
         email = request.form['email'].strip().lower()
         password = request.form['password'].strip()
 
-        query = """SELECT id, first_name, last_name, password FROM people WHERE email = ?"""
+        query = """SELECT id, first_name, last_name, password, type FROM people WHERE email = ?"""
         con = create_connection(DATABASE)
         cur = con.cursor()
         cur.execute(query, (email,))
@@ -63,6 +73,7 @@ def site_login():
             first_name = user_data[0][1]
             last_name = user_data[0][2]
             db_password = user_data[0][3]
+            type = user_data[0][4]
         except IndexError:
             return redirect("/login?error=Email+Invalid+Or+Password+Incorrect")
 
@@ -73,6 +84,7 @@ def site_login():
         session['user_id'] = user_id
         session['first_name'] = first_name
         session['last_name'] = last_name
+        session['type'] = type
         print(session)
         return redirect('/')
 
@@ -150,12 +162,12 @@ def site_category(category_name):
     maori_names = cur.fetchall()
     con.close()
     print(maori_names)
-    return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names)
+    return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 
-@app.route('/category/<category_name>/<maori_word>')
+@app.route('/category/<category_name>/<maori_word>', methods=['GET', 'POST'])
 def site_word(category_name, maori_word):
-    query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename \
+    query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename, id \
             FROM maori_words WHERE maori_name = ?"
     con = create_connection(DATABASE)
     cur = con.cursor()
@@ -163,7 +175,23 @@ def site_word(category_name, maori_word):
     maori_names = cur.fetchall()
     con.close()
     print(maori_names)
-    return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names)
+
+    if request.method == 'POST':
+        category = request.form.get('category')
+        english_name = request.form.get('english_name')
+        maori_name = request.form.get('maori_name')
+        level = request.form.get('level')
+        definition = request.form.get('definition')
+
+        con = create_connection(DATABASE)
+
+        query = "UPDATE maori_words SET category = ?, english_name = ?, maori_name = ?, level = ?, definition = ?" \
+                "WHERE id = ?"
+        cur = con.cursor()
+        cur.execute(query, (category, english_name, maori_name, level, definition, maori_names[0][7]))
+        con.commit()
+        con.close()
+    return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 
 @app.route('/add_word', methods=['GET', 'POST'])

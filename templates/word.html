@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+
 <table>
     <tr>
         <th>Maori</th>
@@ -14,19 +15,56 @@
         <th>Created By</th>
         <th>Created At</th>
         <th>Image</th>
-        </tr>
-        <tr>
-            <td>{{ maori_names[0][0] }}</td>
-            <td>{{ maori_names[0][1] }}</td>
-            <td>{{ maori_names[0][2] }}</td>
-            <td>{{ maori_names[0][3] }}</td>
-            <td>{{ maori_names[0][4] }}</td>
-            <td>{{ maori_names[0][5] }}</td>
-            {% if maori_names[0][6] %}
-                <td><img src='/static/images/{{maori_names[6]}}'></td>
-            {% else %}
-                <td><img src='/static/images/noimage.png'></td>
-            {% endif %}
-        </tr>
-    </table>
+    </tr>
+    <tr>
+        <td>{{ maori_names[0][0] }}</td>
+        <td>{{ maori_names[0][1] }}</td>
+        <td>{{ maori_names[0][2] }}</td>
+        <td>{{ maori_names[0][3] }}</td>
+        <td>{{ maori_names[0][4] }}</td>
+        <td>{{ maori_names[0][5] }}</td>
+        {% if maori_names[0][6] %}
+            <td><img src='/static/images/{{maori_names[6]}}'></td>
+        {% else %}
+            <td><img src='/static/images/noimage.png'></td>
+        {% endif %}
+    </tr>
+</table>
+
+{% if logged_in and is_a_teacher %}
+
+<form class="myform" method="post">
+    <div class="form-group">
+        <div class="form-label">Category:</div>
+        <div class="form-element"><input id="category" name="category" type="text" value="{{ category_name }}"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Word/Phrase (English):</div>
+        <div class="form-element"><input id="english_name" name="english_name" type="text" value="{{ maori_names[0][1] }}"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Word/Phrase (Maori):</div>
+        <div class="form-element"><input id="maori_name" name="maori_name" type="text" value="{{ maori_names[0][0] }}"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Definition:</div>
+        <div class="form-element"><input id="definition" name="definition" type="text" value="{{ maori_names[0][2] }}"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-label">Level:</div>
+        <div class="form-element"><input id="level" name="level" type="text" value="{{ maori_names[0][3] }}"></div>
+    </div>
+
+    <div class="button-group">
+        <input type="submit" value="Save">
+        <input type="reset" value="Reset">
+    </div>
+</form>
+
+{% endif %}
+
 {% endblock %}
