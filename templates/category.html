@@ -9,10 +9,6 @@
     <tr>
         <th>Maori</th>
         <th>English</th>
-        <th>Definition</th>
-        <th>Level</th>
-        <th>Created By</th>
-        <th>Created At</th>
         <th>Image</th>
         </tr>
         <tbody>
@@ -20,10 +16,6 @@
                 <tr>
                     <td><a href='/category/{{ category_name }}/{{ maori_name[0] }}'>{{ maori_name[0] }}</a></td>
                     <td>{{ maori_name[1] }}</td>
-                    <td>{{ maori_name[2] }}</td>
-                    <td>{{ maori_name[3] }}</td>
-                    <td>{{ maori_name[4] }}</td>
-                    <td>{{ maori_name[5] }}</td>
                     {% if maori_name[6] %}
                         <td><img src='/static/images/{{maori_name[6]}}'></td>
                     {% else %}

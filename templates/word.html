@@ -5,5 +5,28 @@
 {% endblock %}
 
 {% block main %}
-
+<table>
+    <tr>
+        <th>Maori</th>
+        <th>English</th>
+        <th>Definition</th>
+        <th>Level</th>
+        <th>Created By</th>
+        <th>Created At</th>
+        <th>Image</th>
+        </tr>
+        <tr>
+            <td>{{ maori_names[0][0] }}</td>
+            <td>{{ maori_names[0][1] }}</td>
+            <td>{{ maori_names[0][2] }}</td>
+            <td>{{ maori_names[0][3] }}</td>
+            <td>{{ maori_names[0][4] }}</td>
+            <td>{{ maori_names[0][5] }}</td>
+            {% if maori_names[0][6] %}
+                <td><img src='/static/images/{{maori_names[6]}}'></td>
+            {% else %}
+                <td><img src='/static/images/noimage.png'></td>
+            {% endif %}
+        </tr>
+    </table>
 {% endblock %}
