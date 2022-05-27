@@ -16,9 +16,8 @@
         <div class="navbar-brand">Maori Dictionary</div>
         <div class="navbar-links">
             <a href="/">Home</a>
-            <a href="/category/">Home</a>
             {% for category in categories %}
-                <a href="/category/{{ category[0] }}">{{ category[0] }}</a>
+                <a href="/category/{{ category[0] }}">{{ category[0].title() }}</a>
             {% endfor %}
             <a href="/add_word">Add A Word</a>
             {% if logged_in %}

@@ -142,7 +142,7 @@ def site_signup():
 
 # Making a list of categories
 def get_categories():
-    query = "SELECT distinct category FROM maori_words"
+    query = "SELECT distinct lower(category) FROM maori_words"
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query)
@@ -156,19 +156,20 @@ def get_categories():
     #     category_list.append(b)
     #     # category_list[i] = category_list[i].title()
     # # category_list = sorted(list(set(category_list_tuple)))
-    print(category_list)
+    # print(category_list)
     return category_list
 
 
 @app.route('/category/<category_name>')
 def site_category(category_name):
     query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename \
-            FROM maori_words WHERE category = ?"
+            FROM maori_words WHERE lower(category) = ?"
     con = create_connection(DATABASE)
     cur = con.cursor()
-    cur.execute(query, (category_name,))
+    cur.execute(query, (category_name.lower(),))
     maori_names = cur.fetchall()
     con.close()
+    print(maori_names[0][6])
     return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 
