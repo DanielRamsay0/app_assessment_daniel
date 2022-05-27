@@ -21,10 +21,10 @@
         <td>{{ maori_names[0][1] }}</td>
         <td>{{ maori_names[0][2] }}</td>
         <td>{{ maori_names[0][3] }}</td>
+        <td>{{ maori_names[0][7]}} {{ maori_names[0][8]}} </td>
         <td>{{ maori_names[0][4] }}</td>
-        <td>{{ maori_names[0][5] }}</td>
-        {% if maori_names[0][6] %}
-            <td><img src='/static/images/{{maori_names[6]}}'></td>
+        {% if maori_names[0][5] %}
+            <td><img src='/static/images/{{ maori_names[0][5] }}'></td>
         {% else %}
             <td><img src='/static/images/noimage.png'></td>
         {% endif %}

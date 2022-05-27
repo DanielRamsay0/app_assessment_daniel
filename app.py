@@ -166,8 +166,8 @@ def site_category(category_name):
 
 @app.route('/category/<category_name>/<maori_word>', methods=['GET', 'POST'])
 def site_word(category_name, maori_word):
-    query = "SELECT maori_name, english_name, definition, level, created_by, created_at, image_filename, id \
-            FROM maori_words WHERE maori_name = ?"
+    query = "SELECT maori_name, english_name, definition, level, created_at, image_filename, maori_words.id, people.first_name, people.last_name \
+            FROM maori_words JOIN people ON maori_words.created_by = people.id WHERE maori_name = ?"
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query, (maori_word,))
@@ -187,7 +187,7 @@ def site_word(category_name, maori_word):
         query = "UPDATE maori_words SET category = ?, english_name = ?, maori_name = ?, level = ?, definition = ?" \
                 "WHERE id = ?"
         cur = con.cursor()
-        cur.execute(query, (category, english_name, maori_name, level, definition, maori_names[0][7]))
+        cur.execute(query, (category, english_name, maori_name, level, definition, maori_names[0][6]))
         con.commit()
         con.close()
         return redirect(f"/category/{category}/{maori_name}")
