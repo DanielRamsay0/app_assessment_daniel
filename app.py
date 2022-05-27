@@ -167,15 +167,15 @@ def site_category(category_name):
 @app.route('/category/<category_name>/<maori_word>', methods=['GET', 'POST'])
 def site_word(category_name, maori_word):
     query = "SELECT maori_name, english_name, definition, level, created_at, image_filename, maori_words.id, people.first_name, people.last_name \
-            FROM maori_words JOIN people ON maori_words.created_by = people.id WHERE maori_name = ?"
+            FROM maori_words JOIN people ON maori_words.created_by = people.id WHERE lower(maori_name) = ? and lower(category) = ?"
     con = create_connection(DATABASE)
     cur = con.cursor()
-    cur.execute(query, (maori_word,))
+    cur.execute(query, (maori_word.lower(), category_name.lower()))
     maori_names = cur.fetchall()
     con.close()
     print(maori_names)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form.get('submit') == "Save":
         category = request.form.get('category').strip().title()
         english_name = request.form.get('english_name').strip().title()
         maori_name = request.form.get('maori_name').strip().title()
@@ -191,6 +191,10 @@ def site_word(category_name, maori_word):
         con.commit()
         con.close()
         return redirect(f"/category/{category}/{maori_name}")
+
+    if request.method == 'POST' and request.form.get('submit') == "Delete Word":
+        return redirect('/confirm_delete_word')
+
     return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 
@@ -220,8 +224,15 @@ def site_add_word():
         cur.execute(query, (category, english_name, maori_name, created_at, definition, level, created_by))
         con.commit()
         con.close()
+    return render_template("add_word.html", categories=get_categories(), is_a_teacher=is_a_teacher(), logged_in=is_logged_in())
 
-    return render_template("add_word.html", categories=get_categories())
+
+@app.route('/confirm_delete_word', methods=['GET', 'POST'])
+def site_confirm_delete_word():
+    print("hihi")
+    # DELETE FROM maori_words where id = ?
+    return render_template("confirm_delete_word.html", categories=get_categories(), is_a_teacher=is_a_teacher(),
+                           logged_in=is_logged_in())
 
 
 if __name__ == '__main__':
