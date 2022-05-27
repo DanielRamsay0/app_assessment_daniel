@@ -60,7 +60,7 @@ def site_login():
 
     if request.method == "POST":
         email = request.form['email'].strip().lower()
-        password = request.form['password'].strip()
+        password = request.form['password']
 
         query = """SELECT id, first_name, last_name, password, type FROM people WHERE email = ?"""
         con = create_connection(DATABASE)
@@ -82,8 +82,8 @@ def site_login():
 
         session['email'] = email
         session['user_id'] = user_id
-        session['first_name'] = first_name
-        session['last_name'] = last_name
+        session['first_name'] = first_name.title()
+        session['last_name'] = last_name.title()
         session['type'] = type
         print(session)
         return redirect('/')
@@ -102,8 +102,8 @@ def site_signup():
     # Getting their details
     if request.method == 'POST':
         print(request.form)
-        first_name = request.form.get('first_name').strip().title()
-        last_name = request.form.get('last_name').strip().title()
+        first_name = request.form.get('first_name').strip().lower()
+        last_name = request.form.get('last_name').strip().lower()
         email = request.form.get('email').strip().lower()
         password = request.form.get('password')
         password2 = request.form.get('password2')
@@ -148,6 +148,14 @@ def get_categories():
     cur.execute(query)
     category_list = cur.fetchall()
     con.close()
+
+    # category_list = []
+    # for i in range(len(category_list_tuple)):
+    #     a = category_list_tuple[i][0]
+    #     b = a.strip()
+    #     category_list.append(b)
+    #     # category_list[i] = category_list[i].title()
+    # # category_list = sorted(list(set(category_list_tuple)))
     print(category_list)
     return category_list
 
@@ -161,7 +169,6 @@ def site_category(category_name):
     cur.execute(query, (category_name,))
     maori_names = cur.fetchall()
     con.close()
-    print(maori_names)
     return render_template("category.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 
@@ -177,11 +184,11 @@ def site_word(category_name, maori_word):
     print(maori_names)
 
     if request.method == 'POST':
-        category = request.form.get('category')
-        english_name = request.form.get('english_name')
-        maori_name = request.form.get('maori_name')
+        category = request.form.get('category').strip().title()
+        english_name = request.form.get('english_name').strip().title()
+        maori_name = request.form.get('maori_name').strip().title()
         level = request.form.get('level')
-        definition = request.form.get('definition')
+        definition = request.form.get('definition').strip().title()
 
         con = create_connection(DATABASE)
 
@@ -202,11 +209,11 @@ def site_add_word():
 
     if request.method == 'POST':
         print(request.form)
-        category = request.form.get('category')
-        english_name = request.form.get('english_name')
-        maori_name = request.form.get('maori_name')
+        category = request.form.get('category').strip().title()
+        english_name = request.form.get('english_name').strip().title()
+        maori_name = request.form.get('maori_name').strip().title()
         level = request.form.get('level')
-        definition = request.form.get('definition')
+        definition = request.form.get('definition').strip().title()
         created_at = date.today()
 
         con = create_connection(DATABASE)
