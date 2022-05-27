@@ -148,15 +148,6 @@ def get_categories():
     cur.execute(query)
     category_list = cur.fetchall()
     con.close()
-
-    # category_list = []
-    # for i in range(len(category_list_tuple)):
-    #     a = category_list_tuple[i][0]
-    #     b = a.strip()
-    #     category_list.append(b)
-    #     # category_list[i] = category_list[i].title()
-    # # category_list = sorted(list(set(category_list_tuple)))
-    # print(category_list)
     return category_list
 
 
@@ -199,6 +190,7 @@ def site_word(category_name, maori_word):
         cur.execute(query, (category, english_name, maori_name, level, definition, maori_names[0][7]))
         con.commit()
         con.close()
+        return redirect(f"/category/{category}/{maori_name}")
     return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
 
 

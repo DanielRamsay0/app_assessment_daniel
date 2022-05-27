@@ -59,7 +59,11 @@
         <div class="form-label">Level:</div>
         <div class="form-element">
         {% for i in range(10) %}
-            <input id="{{ 1 + i }}" name="level" type="radio" value="{{ 1 + i }}">
+            <input id="{{ 1 + i }}" name="level" type="radio" value="{{ 1 + i }}"
+                   {% if i + 1 == maori_names[0][3] %}
+                   checked
+                   {% endif %}
+            >
             <label for="{{ 1 + i }}">{{ 1 + i }}</label>
         {% endfor %}
         </div>
