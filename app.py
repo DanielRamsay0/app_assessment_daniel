@@ -208,15 +208,16 @@ def site_add_word():
         level = request.form.get('level')
         definition = request.form.get('definition').strip().title()
         created_at = date.today()
+        created_by = session['user_id']
 
         con = create_connection(DATABASE)
 
         query = "INSERT INTO maori_words(id, category, english_name, maori_name," \
-                " created_at, definition, level)" \
-                " VALUES(NULL,?,?,?,?,?,?)"
+                " created_at, definition, level, created_by)" \
+                " VALUES(NULL,?,?,?,?,?,?,?)"
 
         cur = con.cursor()
-        cur.execute(query, (category, english_name, maori_name, created_at, definition, level))
+        cur.execute(query, (category, english_name, maori_name, created_at, definition, level, created_by))
         con.commit()
         con.close()
 
