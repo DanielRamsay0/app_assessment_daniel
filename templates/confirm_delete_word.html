@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
-{% block pageheading %}Welcome{% endblock %}
+{% block pageheading %}Are you sure you want to delete {{ maori_word.title() }}?{% endblock %}
 
 {% block main %}
-
+<form class="myform" method="post">
+    <div class="button-group">
+        <input type="submit" value="Confirm">
+        <a href="/category/{{ category_name.replace('/', '|') }}/{{ maori_word }}">Cancel</a>
+    </div>
+</form>
 {% endblock %}

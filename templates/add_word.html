@@ -26,8 +26,12 @@
 
     <div class="form-group">
         <div class="form-label">Level:</div>
-        <div class="form-element"><input id="level" name="level" type="text" required></div>
-    </div>
+        <div class="form-element">
+        {% for i in range(10) %}
+            <input id="{{ 1 + i }}" id="level" name="level" type="radio" value="{{ 1 + i }}">
+            <label for="{{ 1 + i }}">{{ 1 + i }}</label>
+        {% endfor %}
+        </div>
 
     <div class="button-group">
         <input type="submit" value="Submit">

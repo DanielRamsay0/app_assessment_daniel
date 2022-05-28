@@ -17,7 +17,7 @@
         <div class="navbar-links">
             <a href="/">Home</a>
             {% for category in categories %}
-                <a href="/category/{{ category[0] }}">{{ category[0].title() }}</a>
+                <a href="/category/{{ category[0].replace('/', '|') }}">{{ category[0].title() }}</a>
             {% endfor %}
             <a href="/add_word">Add A Word</a>
             {% if logged_in %}
