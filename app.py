@@ -248,6 +248,10 @@ def site_word(category_name, maori_word):
         level = request.form.get('level')
         definition = request.form.get('definition').strip().title()
 
+        # Making sure variables are at least 6 characters and accounting for slash url change
+        if len(category) < 1 or len(english_name) < 1 or len(maori_name) < 1 or len(definition) < 1:
+            return redirect(f"/category/{category_name.replace('/', '|')}/{maori_word}?error=must+enter+text")
+
         # Connecting to and updating the details of the word in the database
         con = create_connection(DATABASE)
         query = "UPDATE maori_words SET category = ?, english_name = ?, maori_name = ?, level = ?, definition = ?" \
