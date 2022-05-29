@@ -227,7 +227,7 @@ def site_word(category_name, maori_word):
     # Replacing the straight lines with slashes (putting back after fixing problem of extra slashes in url)
     category_name = category_name.replace("|", "/")
 
-    # Getting the words information and information of word creator using foreign key from database
+    # Getting the words information and information of word creator using a join on the foreign key from database
     query = "SELECT maori_name, english_name, definition, level, created_at, image_filename, maori_words.id, \
             people.first_name, people.last_name \
             FROM maori_words JOIN people ON maori_words.created_by = people.id \
@@ -275,10 +275,15 @@ def site_word(category_name, maori_word):
 @app.route('/add_word', methods=['GET', 'POST'])
 def site_add_word():
 
-    # Checks if user is logged in and sends to login page if not
+    # Checks if user is logged in  and sends to login page if not
     if not is_logged_in():
         print("must be logged in and be a teacher to add words")
-        return redirect('/login')
+        return redirect('/login?must+be+logged+in')
+
+    # Checks if user is a teacher and sends to home page if not
+    if not is_a_teacher():
+        print("must be a teacher to add words")
+        return redirect('/?must+be+a+teacher+to+add+words')
 
     # If form submitted
     if request.method == 'POST':

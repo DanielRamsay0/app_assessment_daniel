@@ -17,9 +17,9 @@
                     <td><a href='/category/{{ category_name.lower().replace("/", "|") }}/{{ maori_name[0].lower() }}'>{{ maori_name[0] }}</a></td>
                     <td>{{ maori_name[1] }}</td>
                     {% if maori_name[6] %}
-                        <td><img src='/static/images/{{ maori_name[6] }}' style="width: 500px"></td>
+                        <td><img src='/static/images/{{ maori_name[6] }}' style="width: 150px"></td>
                     {% else %}
-                        <td><img src='/static/images/noimage.png' style="width: 500px"></td>
+                        <td><img src='/static/images/noimage.png' style="width: 150px"></td>
                     {% endif %}
                 </tr>
             {% endfor %}
