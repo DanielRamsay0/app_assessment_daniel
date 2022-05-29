@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block pageheading %}
-{{category_name}}
+{{category_name.title()}}
 {% endblock %}
 
 {% block main %}
@@ -14,12 +14,12 @@
         <tbody>
             {% for maori_name in maori_names %}
                 <tr>
-                    <td><a href='/category/{{ category_name.lower().replace("/", "|") }}/{{ maori_name[0].lower() }}'>{{ maori_name[0] }}</a></td>
-                    <td>{{ maori_name[1] }}</td>
+                    <td><a href='/category/{{ category_name.lower().replace("/", "|") }}/{{ maori_name[0].lower() }}'>{{ maori_name[0].title() }}</a></td>
+                    <td>{{ maori_name[1].title() }}</td>
                     {% if maori_name[6] %}
-                        <td><img src='/static/images/{{ maori_name[6] }}' style="width: 150px"></td>
+                        <td><img src='/static/images/{{ maori_name[6] }}' style="width: 400px"></td>
                     {% else %}
-                        <td><img src='/static/images/noimage.png' style="width: 150px"></td>
+                        <td><img src='/static/images/noimage.png' style="width: 400px"></td>
                     {% endif %}
                 </tr>
             {% endfor %}

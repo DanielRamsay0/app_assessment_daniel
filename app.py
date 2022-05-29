@@ -268,7 +268,9 @@ def site_word(category_name, maori_word):
         return redirect(f"/confirm_delete_word/{category_name.replace('/', '|')}/{maori_names[0][6]}")
 
     # Rendering the maori word page
-    return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(), category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher())
+    return render_template("word.html", logged_in=is_logged_in(), categories=get_categories(),
+                           category_name=category_name, maori_names=maori_names, is_a_teacher=is_a_teacher(),
+                           maori_word=maori_word)
 
 
 # Add word function
