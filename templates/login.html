@@ -1,7 +1,9 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
 {% block pageheading %}Login{% endblock %}
 
+<!--Creating a login form with all fields required-->
 {% block main %}
 <form class="myform" method="POST">
     <div class="form-group">
@@ -14,6 +16,7 @@
         <div class="form-element"><input id="password" name="password" type="password" required></div>
     </div>
 
+<!--    Submit button and link to signup page for those who aren't logged in-->
     <div class="button-group">
         <input type="submit" value="Submit"> or <a href="signup">Sign Up</a>
     </div>

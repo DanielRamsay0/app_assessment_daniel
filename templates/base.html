@@ -12,14 +12,17 @@
 
 <body>
 <nav>
+<!--    Setting up navigation bar-->
     <div class="container">
         <div class="navbar-brand">Maori Dictionary</div>
         <div class="navbar-links">
             <a href="/">Home</a>
+<!--            Displaying all categories using for statement-->
             {% for category in categories %}
                 <a href="/category/{{ category[0].replace('/', '|') }}">{{ category[0].title() }}</a>
             {% endfor %}
             <a href="/add_word">Add A Word</a>
+<!--            Showing logout function if logged in otherwise showing login-->
             {% if logged_in %}
                 <a href="/logout">Log Out</a>
             {% else %}
@@ -32,13 +35,16 @@
 <div class="container">
     <header>
         <h1>Maori Dictionary</h1>
+<!--        Creating a heading that can easily be set up on other pages-->
         <h2>{% block pageheading %}{% endblock %}</h2>
     </header>
+<!--    Welcoming the user if logged in-->
     {% if logged_in %}
         <strong>Hello {{ session.first_name }}</strong>
     {% endif %}
 
     <main>
+<!--Creating a main block that can easily be set up on other pages-->
         {% block main %}{% endblock %}
     </main>
 

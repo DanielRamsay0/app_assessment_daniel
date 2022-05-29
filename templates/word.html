@@ -1,3 +1,4 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
 {% block pageheading %}
@@ -6,6 +7,7 @@
 
 {% block main %}
 
+<!--Creating a table with the words details and an image-->
 <table>
     <tr>
         <th>Maori</th>
@@ -17,12 +19,14 @@
         <th>Image</th>
     </tr>
     <tr>
+<!--        Showing the words details in title format-->
         <td>{{ maori_names[0][0].title() }}</td>
         <td>{{ maori_names[0][1].title() }}</td>
         <td>{{ maori_names[0][2].title() }}</td>
         <td>{{ maori_names[0][3] }}</td>
         <td>{{ maori_names[0][7].title() }} {{ maori_names[0][8].title() }} </td>
         <td>{{ maori_names[0][4] }}</td>
+<!--        Showing image if it exists otherwise showing placeholder image-->
         {% if maori_names[0][5] %}
             <td><img src='/static/images/{{ maori_names[0][5] }}'></td>
         {% else %}
@@ -31,6 +35,7 @@
     </tr>
 </table>
 
+<!--If a teacher is logged in showing editing functionality-->
 {% if logged_in and is_a_teacher %}
 
 <form class="myform" method="post">
@@ -55,6 +60,7 @@
         <div class="form-element"><input id="definition" name="definition" type="text" value="{{ maori_names[0][2].title() }}"></div>
     </div>
 
+<!--    Creating 10 buttons with correct one used as default-->
     <div class="form-group">
         <div class="form-label">Level:</div>
         <div class="form-element">

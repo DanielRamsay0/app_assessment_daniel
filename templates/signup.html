@@ -1,9 +1,11 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
 {% block pageheading %}
 Sign Up
 {% endblock %}
 
+<!--Creating a form with all fields requiring entries -->
 {% block main %}
 <form class="myform" method="POST">
     <div class="form-group">
@@ -31,6 +33,7 @@ Sign Up
         <div class="form-element"><input id="password2" name="password2" type="password" required></div>
     </div>
 
+<!--    Creating buttons for teacher or student with student as default-->
     <div class="form-group">
         <div class="form-label">Type:</div>
         <div class="form-element">

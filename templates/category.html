@@ -1,9 +1,12 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
+<!--Displaying the name of the category as the title-->
 {% block pageheading %}
 {{category_name.title()}}
 {% endblock %}
 
+<!--Displaying table with words in-->
 {% block main %}
 <table>
     <tr>
@@ -12,10 +15,12 @@
         <th>Image</th>
         </tr>
         <tbody>
+<!--        Creating a for loop to get all maori words displayed-->
             {% for maori_name in maori_names %}
                 <tr>
                     <td><a href='/category/{{ category_name.lower().replace("/", "|") }}/{{ maori_name[0].lower() }}'>{{ maori_name[0].title() }}</a></td>
                     <td>{{ maori_name[1].title() }}</td>
+<!--                    If there is an image for the word displaying it otherwise showing the placeholder image-->
                     {% if maori_name[6] %}
                         <td><img src='/static/images/{{ maori_name[6] }}' style="width: 150px"></td>
                     {% else %}

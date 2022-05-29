@@ -1,8 +1,11 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
+<!--Confirm message with the maori word in it-->
 {% block pageheading %}Are you sure you want to delete {{ maori_word.title() }}?{% endblock %}
 
 {% block main %}
+<!--Creates a set of buttons one confirming deletion the other redirecting back to the word remembering the slash switch-->
 <form class="myform" method="post">
     <div class="button-group">
         <input type="submit" value="Confirm">

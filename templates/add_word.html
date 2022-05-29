@@ -1,7 +1,9 @@
+<!--Uses the base to set up nav menu among other things-->
 {% extends 'base.html' %}
 
 {% block pageheading %}Add A Word{% endblock %}
 
+<!--Creating form to take inputs with all required-->
 {% block main %}
 <form class="myform" method="post">
     <div class="form-group">
@@ -27,6 +29,7 @@
     <div class="form-group">
         <div class="form-label">Level:</div>
         <div class="form-element">
+<!--            Creating 10 buttons with level 5 automatically selected-->
         {% for i in range(10) %}
             <input id="{{ 1 + i }}" id="level" name="level" type="radio" value="{{ 1 + i }}"
                    {% if i == 4 %}
